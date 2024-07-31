@@ -1,0 +1,38 @@
+<html><head>
+<title>WebSim Minesweeper</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f0f0f0;
+    }
+    #game-container {
+        margin-top: 20px;
+    }
+    #board {
+        display: grid;
+        gap: 1px;
+        background-color: #888;
+        border: 2px solid #333;
+    }
+    .cell {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .cell:hover {
+        filter: brightness(90%);
+    }
+    .unrevealed {
+        background-color: var(--board-color, #ccc);
+    }
+    .revealed {
+        background-color: #fff;
+    }
