@@ -36,3 +36,36 @@
     .revealed {
         background-color: #fff;
     }
+.mine {
+        background-color: #f00;
+    }
+    .flag {
+        background-color: #ff0;
+    }
+    #controls {
+        margin-bottom: 20px;
+    }
+    button {
+        margin: 5px;
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+    #color-picker {
+        margin-left: 10px;
+    }
+</style>
+</head>
+<body>
+<h1>WebSim Minesweeper</h1>
+<div id="controls">
+    <button id="easy">Easy</button>
+    <button id="medium">Medium</button>
+    <button id="hard">Hard</button>
+    <button id="restart">Restart</button>
+    <input type="color" id="color-picker" value="#cccccc">
+</div>
+<div id="game-container">
+    <div id="board"></div>
+</div>
+
+<script>
