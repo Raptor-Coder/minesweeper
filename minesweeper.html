@@ -215,3 +215,40 @@ function handleCellClick(event) {
     const cell = event.target;
     const row = parseInt(cell.dataset.row);
     const col = parseInt(cell.dataset.col);
+
+    if (event.button === 0 && !event.ctrlKey) {  // Left click
+        const result = game.revealCell(row, col);
+        if (result === 'gameover') {
+            alert('Game Over! You hit a mine.');
+        } else if (result === 'win') {
+            alert('Congratulations! You won!');
+        }
+    } else if (event.button === 2 || (event.button === 0 && event.ctrlKey)) {  // Right click or Ctrl+Left click
+        game.toggleFlag(row, col);
+    }
+
+    updateBoard();
+}
+
+function startGame(rows, cols, mines) {
+    game = new Minesweeper(rows, cols, mines);
+    createBoard(rows, cols);
+    updateBoard();
+}
+
+document.getElementById('easy').addEventListener('click', () => startGame(9, 9, 10));
+document.getElementById('medium').addEventListener('click', () => startGame(16, 16, 40));
+document.getElementById('hard').addEventListener('click', () => startGame(16, 30, 99));
+document.getElementById('restart').addEventListener('click', () => startGame(game.rows, game.cols, game.mines));
+
+boardElement.addEventListener('mousedown', handleCellClick);
+boardElement.addEventListener('contextmenu', (e) => e.preventDefault());
+
+colorPicker.addEventListener('input', (e) => {
+    document.documentElement.style.setProperty('--board-color', e.target.value);
+});
+
+// Start with Easy level
+startGame(9, 9, 10);
+</script>
+</body></html>
