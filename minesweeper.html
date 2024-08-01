@@ -184,3 +184,34 @@ function createBoard(rows, cols) {
         }
     }
 }
+
+function updateBoard() {
+    const cells = boardElement.getElementsByClassName('cell');
+    for (let cell of cells) {
+        const row = parseInt(cell.dataset.row);
+        const col = parseInt(cell.dataset.col);
+        const cellData = game.board[row][col];
+
+        cell.className = 'cell';
+        if (cellData.isRevealed) {
+            cell.classList.add('revealed');
+            if (cellData.isMine) {
+                cell.classList.add('mine');
+                cell.textContent = '💣';
+            } else if (cellData.neighbor > 0) {
+                cell.textContent = cellData.neighbor;
+            }
+        } else if (cellData.isFlagged) {
+            cell.classList.add('flag');
+            cell.textContent = '🚩';
+        } else {
+            cell.classList.add('unrevealed');
+            cell.textContent = '';
+        }
+    }
+}
+function handleCellClick(event) {
+    if (game.gameOver) return;
+    const cell = event.target;
+    const row = parseInt(cell.dataset.row);
+    const col = parseInt(cell.dataset.col);
