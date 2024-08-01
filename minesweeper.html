@@ -69,3 +69,40 @@
 </div>
 
 <script>
+class Minesweeper {
+    constructor(rows, cols, mines) {
+        this.rows = rows;
+        this.cols = cols;
+        this.mines = mines;
+        this.board = [];
+        this.gameOver = false;
+        this.cellsRevealed = 0;
+        this.init();
+    }
+
+    init() {
+        // Create empty board
+        for (let i = 0; i < this.rows; i++) {
+            this.board[i] = [];
+            for (let j = 0; j < this.cols; j++) {
+                this.board[i][j] = {
+                    isMine: false,
+                    neighbor: 0,
+                    isRevealed: false,
+                    isFlagged: false
+                };
+            }
+        }
+
+        // Place mines
+        let minesPlaced = 0;
+        while (minesPlaced < this.mines) {
+            const row = Math.floor(Math.random() * this.rows);
+            const col = Math.floor(Math.random() * this.cols);
+            if (!this.board[row][col].isMine) {
+                this.board[row][col].isMine = true;
+                minesPlaced++;
+                this.incrementNeighbors(row, col);
+            }
+        }
+    }
