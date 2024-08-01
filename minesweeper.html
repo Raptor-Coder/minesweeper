@@ -141,3 +141,46 @@ class Minesweeper {
 
         return 'continue';
     }
+
+    revealNeighbors(row, col) {
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                const newRow = row + i;
+                const newCol = col + j;
+                if (newRow >= 0 && newRow < this.rows && newCol >= 0 && newCol < this.cols) {
+                    if (!this.board[newRow][newCol].isRevealed && !this.board[newRow][newCol].isFlagged) {
+                        this.revealCell(newRow, newCol);
+                    }
+                }
+            }
+        }
+    }
+
+    toggleFlag(row, col) {
+        if (!this.gameOver && !this.board[row][col].isRevealed) {
+            this.board[row][col].isFlagged = !this.board[row][col].isFlagged;
+        }
+    }
+}
+
+let game;
+const boardElement = document.getElementById('board');
+const colorPicker = document.getElementById('color-picker');
+
+function createBoard(rows, cols) {
+    boardElement.innerHTML = '';
+    boardElement.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
+
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell', 'unrevealed');
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            if ((i + j) % 2 === 0) {
+                cell.style.filter = 'brightness(95%)';
+            }
+            boardElement.appendChild(cell);
+        }
+    }
+}
