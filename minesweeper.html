@@ -106,3 +106,38 @@ class Minesweeper {
             }
         }
     }
+
+    incrementNeighbors(row, col) {
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                const newRow = row + i;
+                const newCol = col + j;
+                if (newRow >= 0 && newRow < this.rows && newCol >= 0 && newCol < this.cols) {
+                    this.board[newRow][newCol].neighbor++;
+                }
+            }
+        }
+    }
+
+    revealCell(row, col) {
+        if (this.gameOver || this.board[row][col].isRevealed || this.board[row][col].isFlagged) return;
+
+        this.board[row][col].isRevealed = true;
+        this.cellsRevealed++;
+
+        if (this.board[row][col].isMine) {
+            this.gameOver = true;
+            return 'gameover';
+        }
+
+        if (this.cellsRevealed === this.rows * this.cols - this.mines) {
+            this.gameOver = true;
+            return 'win';
+        }
+
+        if (this.board[row][col].neighbor === 0) {
+            this.revealNeighbors(row, col);
+        }
+
+        return 'continue';
+    }
